@@ -39,21 +39,17 @@ matching_albums = tracks.map(&:album).sort.uniq
 
 choices = []
 index = 0
-if matching_artists.size > 1
-  choices += matching_artists.map do |artist|
-    mtracks = tracks.select { |t| t.artist == artist }
-    i = index
-    index += 1
-    Choice.new(:artist, i, artist, nil, mtracks)
-  end
+choices += matching_artists.map do |artist|
+  mtracks = tracks.select { |t| t.artist == artist }
+  i = index
+  index += 1
+  Choice.new(:artist, i, artist, nil, mtracks)
 end
-if matching_albums.size > 1 || choices.empty?
-  choices += matching_albums.map do |album|
-    mtracks = tracks.select { |t| t.album == album }
-    i = index
-    index += 1
-    Choice.new(:album, i, album, mtracks[0].artist, mtracks)
-  end
+choices += matching_albums.map do |album|
+  mtracks = tracks.select { |t| t.album == album }
+  i = index
+  index += 1
+  Choice.new(:album, i, album, mtracks[0].artist, mtracks)
 end
 
 puts
