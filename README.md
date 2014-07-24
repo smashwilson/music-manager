@@ -9,6 +9,8 @@ tracks, copies the one I pick into a local directory, and adds them to iTunes.
 
 It's also an unholy abomination of Ruby, bash scripting, and shelling out to AppleScript.
 
+![hot terminal action](screenshot.png)
+
 ## Installation
 
 I'm not going to package this as a gem or anything unless anyone else actually wants me to.
