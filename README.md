@@ -23,3 +23,15 @@ git clone https://github.com/smashwilson/music-manager.git ~/code/music-manager
 cd ~/code/music-manager
 bundle install
 ```
+
+To run it, I've got a bin script in my [dotfiles](https://github.com/smashwilson/dotfiles) for
+convenience:
+
+```bash
+#!/bin/bash
+#
+# Run music-manager.
+
+cd ${HOME}/code/music-manager
+bundle exec ruby music-manager.rb
+```
