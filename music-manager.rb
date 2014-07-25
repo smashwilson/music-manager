@@ -29,6 +29,11 @@ print "Search for an #{'album'.bold} or an #{'artist'.bold}: "
 search = gets.chomp.downcase
 
 stdout = `ssh smash@winter 'find #{REMOTE_DIRS.join ' '} -name "*.mp3" | grep -i "#{search}"'`
+unless $?.success?
+  $stderr.puts "Unable to connect to winter!"
+  exit 1
+end
+
 tracks = stdout.scrub.split(/\n/).map do |path|
   parts = path.split(%r{/})
   Track.new(path, parts[-3], parts[-2])
