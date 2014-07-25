@@ -79,18 +79,20 @@ puts
 
 dest_paths = []
 choice.tracks.each do |track|
+  src_path = track.path
+
   dest_dir = File.join(LOCAL_DIR, track.artist, track.album)
-  dest_path = File.join(dest_dir, File.basename(track.path))
+  dest_path = File.join(dest_dir, File.basename(src_path))
   dest_paths << dest_path
   FileUtils.mkdir_p dest_dir
 
-  `scp 'smash@winter:\"#{track.path}\"' '#{dest_path}'`
+  command = "scp \"smash@winter:\\\"#{src_path}\\\"\" \"#{dest_path}\""
+  system command
   unless $?.success?
-    puts "Unable to copy #{track.path} to #{dest_path}!"
+    puts "Unable to copy #{src_path} to #{dest_path}!"
     exit 1
   end
 
-  print '.'
   $stdout.flush
 end
 puts
@@ -98,9 +100,10 @@ puts
 plural = choice.tracks.size == 1 ? "track" : "tracks"
 puts "Complete. #{choice.tracks.size} #{plural} transferred."
 
-cmdlines = ['tell application "iTunes"']
+cmdlines = ['tell application \"iTunes\"']
 dest_paths.each do |path|
-  cmdlines << "  add (POSIX file \"#{path}\")"
+  quoted = path.gsub(/"/) { "\\\"" }
+  cmdlines << "  add (POSIX file \\\"#{path}\\\")"
 end
 cmdlines << 'end tell'
 command = cmdlines.join "\n"
@@ -109,6 +112,6 @@ puts
 puts "Adding tracks to iTunes."
 puts
 
-system "osascript -e '#{command}'"
+system "osascript -e \"#{command}\""
 
 puts "Complete."
