@@ -12,6 +12,7 @@ config = YAML.load_file(File.join ENV['HOME'], '.music.yml')
 
 LOCAL_DIR = config['local_dir']
 REMOTE_DIRS = config['remote_dirs']
+HOST = config['host']
 
 Track = Struct.new(:path, :artist, :album)
 Choice = Struct.new(:kind, :index, :name, :subname, :tracks) do
@@ -27,7 +28,7 @@ end
 print "Search for an #{'album'.bold} or an #{'artist'.bold}: "
 search = gets.chomp.downcase
 
-stdout = `ssh smash@winter 'find #{REMOTE_DIRS.join ' '} -name "*.mp3" | grep -i "#{search}"'`
+stdout = `ssh #{HOST} 'find #{REMOTE_DIRS.join ' '} -name "*.mp3" | grep -i "#{search}"'`
 unless $?.success?
   $stderr.puts "Unable to connect to winter!"
   exit 1
@@ -90,7 +91,7 @@ choice.tracks.each do |track|
   dest_paths << dest_path
   FileUtils.mkdir_p dest_dir
 
-  command = "scp \"smash@winter:\\\"#{src_path}\\\"\" \"#{dest_path}\""
+  command = "scp \"#{HOST}:\\\"#{src_path}\\\"\" \"#{dest_path}\""
   system command
   unless $?.success?
     puts "Unable to copy #{src_path} to #{dest_path}!"
