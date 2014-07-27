@@ -24,6 +24,13 @@ cd ~/code/music-manager
 bundle install
 ```
 
+Configure it by copying the example configuration to `${HOME}` and customizing as desired:
+
+```bash
+cp ~/code/music-manager/music.example.yml ~/.music.yml
+${EDITOR} ~/.music.yml
+```
+
 To run it, I've got a bin script in my [dotfiles](https://github.com/smashwilson/dotfiles) for
 convenience:
 

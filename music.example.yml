@@ -1,0 +1,13 @@
+# Copy this file to ${HOME} and customize it to configure the music manager.
+---
+
+# Local directory to store fetched music files.
+local_dir: /home/me/music
+
+# Remote directories to search recursively for music files.
+remote_dirs:
+- /data/music0
+- /data/music1
+
+# Hostname and optional user used to authenticate with SSH.
+host: username@hostname
