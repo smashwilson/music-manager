@@ -8,11 +8,10 @@ require 'colored'
 require 'fileutils'
 require 'shellwords'
 
-LOCAL_DIR = "/Users/ashl6947/Music/winter"
-REMOTE_DIRS = %w{
-  /usr/local/ash-music
-  /usr/local/jayne-music
-}
+config = YAML.load_file(File.join ENV['HOME'], '.music.yml')
+
+LOCAL_DIR = config['local_dir']
+REMOTE_DIRS = config['remote_dirs']
 
 Track = Struct.new(:path, :artist, :album)
 Choice = Struct.new(:kind, :index, :name, :subname, :tracks) do
