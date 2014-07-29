@@ -33,8 +33,12 @@ puts
 
 # Interactively search for albums or tracks that match a given pattern.
 
-print "Search for an #{'album'.bold} or an #{'artist'.bold}: "
-search = gets.chomp.downcase
+search = ARGV[0] if ARGV[0]
+
+unless search
+  print "Search for an #{'album'.bold} or an #{'artist'.bold}: "
+  search = $stdin.gets.chomp.downcase
+end
 
 if search.empty?
   puts "\nGoodbye!"
@@ -77,7 +81,7 @@ puts choices.map(&:to_s).join("\n")
 puts
 
 print "Choose a selection: "
-chosen_s = gets.chomp
+chosen_s = $stdin.gets.chomp
 unless chosen_s =~ /\d+/
   puts "Please enter a number!"
   exit 1
