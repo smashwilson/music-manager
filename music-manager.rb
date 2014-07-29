@@ -36,6 +36,11 @@ puts
 print "Search for an #{'album'.bold} or an #{'artist'.bold}: "
 search = gets.chomp.downcase
 
+if search.empty?
+  puts "\nGoodbye!"
+  exit 0
+end
+
 stdout = `ssh #{HOST} 'find #{REMOTE_DIRS.join ' '} -name "*.mp3" | grep -i "#{search}"'`
 unless $?.success?
   $stderr.puts "Unable to connect to winter!"
