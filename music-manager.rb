@@ -23,6 +23,14 @@ Choice = Struct.new(:kind, :index, :name, :subname, :tracks) do
   end
 end
 
+# Print the current disk usage before we do anything.
+
+disk_usage = `df -bH #{LOCAL_DIR}`.chomp.split(/\n/)[1].split(/\s+/)
+_, total, used, available, percent, _ = *disk_usage
+puts "Current disk usage: #{used.cyan.bold} used / #{available.cyan.bold} " +
+  "free out of #{total.cyan.bold} (#{percent.cyan.bold})"
+puts
+
 # Interactively search for albums or tracks that match a given pattern.
 
 print "Search for an #{'album'.bold} or an #{'artist'.bold}: "
